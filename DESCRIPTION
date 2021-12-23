@@ -1,0 +1,28 @@
+Package: RmCloud
+Title: An Amazing Shiny App
+Version: 0.0.0.9001
+Authors@R: 
+    person(given = "firstname",
+           family = "lastname",
+           role = c("aut", "cre"),
+           email = "your@email.com")
+Description: What the package does (one paragraph).
+License: What license is it under?
+Imports: 
+    config (>= 0.3.1),
+    golem (>= 0.3.1.9003),
+    RmData,
+    shiny (>= 1.7.1)
+Remotes: COHHIO/Rm_data
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.2
+Collate: 
+    'app_config.R'
+    'app_server.R'
+    'global.R'
+    'app_ui.R'
+    'daily_update.R'
+    'mod_body_utils.R'
+    'mod_body.R'
+    'run_app.R'
