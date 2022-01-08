@@ -14,7 +14,7 @@ app_ui <- function(request) {
     bs4Dash::bs4DashPage(
       header = bs4Dash::bs4DashNavbar(title = "RmCloud"),
       body = bs4Dash::bs4DashBody(mod_body_ui("body")),
-      sidebar = bs4Dash::bs4DashSidebar()
+      sidebar = bs4Dash::bs4DashSidebar(disable = TRUE)
     )
 
   )
@@ -36,4 +36,4 @@ golem_add_external_resources <- function() {
                              app_title = 'RmCloud'))
             # Add here other external resources
             # for example, you can add shinyalert::useShinyalert())
-            }
+}
