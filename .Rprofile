@@ -1,5 +1,8 @@
 source("renv/activate.R")
 options(shiny.maxRequestSize=UU::size(50, "mb"),
+        keep.source = TRUE,
+        tryCatchLog.max.lines.per.call = 30,
+        shiny.autoload.r = FALSE,
         HMIS = list(Clarity = TRUE,
                     ServicePoint = TRUE,
                     Clarity_URL = "https://cohhio.clarityhs.com",

@@ -1,22 +1,31 @@
 Package: RmCloud
 Title: An app to run the data-munging back-end RmData
 Version: 0.0.1
-Authors@R: c(person(given = "HMIS",
-           family = "Data Analyst",
-           role = c("aut", "cre"),
-           email = "hmisdataanalyst@cohhio.org"),
-    person(given = "Stephen",
-           family = "Holsenbeck",
-           role = c("aut"),
-           email = "sholsen@alumni.emory.com"))
+Authors@R: c(person(given = "HMIS", family = "Data Analyst", role
+       = c("aut", "cre"), email = "hmisdataanalyst@cohhio.org"),
+       person(given = "Stephen", family = "Holsenbeck", role =
+       c("aut"), email = "sholsen@alumni.emory.com"))
 Description: A UI for RmData
 License: AGPL-3
+Depends: R (>= 4.1.0)
 Imports: 
-    config (>= 0.3.1),
-    golem (>= 0.3.1.9003),
+    bs4Dash,
+    clarity.looker,
+    cli,
+    config,
+    devtools,
+    pkgload,
+    futile.logger,
+    golem,
+    purrr,
+    rlang,
     RmData,
-    shiny (>= 1.7.1)
-Remotes: COHHIO/RmData
+    sass,
+    shiny,
+    shinyjs,
+    shinyWidgets,
+    tryCatchLog
+Remotes: COHHIO/RmData, COHHIO/clarity.looker, aryoda/tryCatchLog
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
@@ -26,7 +35,6 @@ Collate:
     'app_server.R'
     'global.R'
     'app_ui.R'
-    'daily_update.R'
     'functions.R'
     'mod_body_utils.R'
     'mod_body.R'
