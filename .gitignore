@@ -1,0 +1,8 @@
+.Rproj.user
+.Renviron
+.Rhistory
+renv/library
+renv/staging
+dev/
+inst/auth
+data/
