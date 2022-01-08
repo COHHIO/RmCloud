@@ -1,6 +1,6 @@
 Package: RmCloud
 Title: An app to run the data-munging back-end RmData
-Version: 0.0.0.9002
+Version: 0.0.1
 Authors@R: c(person(given = "HMIS",
            family = "Data Analyst",
            role = c("aut", "cre"),
