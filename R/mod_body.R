@@ -53,12 +53,9 @@ mod_body_server <- function(id){
     steps <-  eventReactive(input$steps, {input$steps}) |>
       shiny::debounce(1500)
 
-    export_zip <- eventReactive(input$export_zip, {
-      if (file.exists(input$export_zip$datapath)) {
+    observeEvent(input$export_zip, {
+      if (file.exists(input$export_zip$datapath))
         out <- clarity.looker::hud_export_extract(input$export_zip$datapath, dirs$export)
-      } else
-        out <- FALSE
-      out
     })
 
 
