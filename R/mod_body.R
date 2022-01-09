@@ -95,7 +95,7 @@ mod_body_server <- function(id){
 
     observeEvent(input$run, {
       req(input$run, input$steps, steps(), funs())
-      to_console(RmData::daily_update(session = session, steps = steps(), funs = funs(), app_env = Rm_env, clarity_api = cl_api, remote = TRUE))
+      to_console(RmData::daily_update(session = session, steps = steps(), funs = funs(), app_env = Rm_env, clarity_api = cl_api, remote = TRUE), session = session)
     })
 
   })
