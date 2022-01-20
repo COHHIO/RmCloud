@@ -1,0 +1,14 @@
+name: RmCloud
+title: RmCloud
+username:
+account: ohiobalanceofstatecoc
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5412410
+bundleId: 5471604
+url: https://ohiobalanceofstatecoc.shinyapps.io/RmCloud/
+when: 1642251771.99303
+lastSyncTime: 1642251771.99303
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: dev/01_start.R|dev/02_dev.R|dev/03_deploy.R|dev/run_dev.R|data
