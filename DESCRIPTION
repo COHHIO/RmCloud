@@ -1,7 +1,7 @@
 Package: RmCloud
 Title: An app to run the data-munging back-end RmData
 Version: 0.0.1
-Authors@R: c(person(given = "HMIS", family = "Data Analyst", role
+Authors@R: c(person(given = "COHHIO", family = "HMIS Data Analyst", role
        = c("aut", "cre"), email = "hmisdataanalyst@cohhio.org"),
        person(given = "Stephen", family = "Holsenbeck", role =
        c("aut"), email = "sholsen@alumni.emory.com"))
@@ -15,7 +15,9 @@ Imports:
     config,
     devtools,
     pkgload,
+    fs,
     futile.logger,
+    glue,
     golem,
     purrr,
     rlang,
@@ -35,7 +37,6 @@ Collate:
     'app_server.R'
     'global.R'
     'app_ui.R'
-    'functions.R'
     'mod_body_utils.R'
     'mod_body.R'
     'run_app.R'
