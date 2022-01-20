@@ -14,6 +14,7 @@ mod_body_ui <- function(id){
     shinyjs::useShinyjs(),
     fluidRow(bs4Dash::bs4Card(
       title = "Controls",
+      id = "controls",
       fluidRow(
         shinyWidgets::prettyCheckboxGroup(ns("steps"),
                                           "Choose the steps to run:",
@@ -33,9 +34,9 @@ mod_body_ui <- function(id){
       ),
       width = 12
     )),
+    fluidRow(tags$h5(class = "text-center", "Console"), tags$hr()),
     fluidRow(
-
-      column(width = 12, style = "overflow-y: scroll; height:600px", class = "border border-info rounded", tags$h5(class = "text-center", "Console"), tags$hr(), tags$p(id = ns("console")))
+      column(width = 12, style = "overflow: auto; height:600px", class = "border border-info rounded", id = ns("console"))
     )
   )
 }
@@ -47,11 +48,6 @@ mod_body_ui <- function(id){
 mod_body_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    funs <- eventReactive(input$functions, {input$functions}) |>
-      shiny::debounce(1500)
-
-    steps <-  eventReactive(input$steps, {input$steps}) |>
-      shiny::debounce(1500)
 
     observeEvent(input$export_zip, {
       if (file.exists(input$export_zip$datapath))
@@ -94,8 +90,8 @@ mod_body_server <- function(id){
     }, priority = -1)
 
     observeEvent(input$run, {
-      req(input$run, input$steps, steps(), funs())
-      to_console(RmData::daily_update(session = session, steps = steps(), funs = funs(), app_env = Rm_env, clarity_api = cl_api, remote = TRUE), session = session)
+      req(input$run, input$steps, input$functions)
+      to_console(RmData::daily_update(session = session, steps = input$steps, funs = input$functions, app_env = Rm_env, clarity_api = cl_api, remote = TRUE), session = session)
     })
 
   })
