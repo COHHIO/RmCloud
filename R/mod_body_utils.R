@@ -9,15 +9,15 @@ info_to_shiny_console <- function ()
                      WARN = 'text-warning',
                      FATAL = ,
                      ERROR = 'text-danger')
-    shinyjs::html(id = "console", html = as.character(tags$code(class = .class, tags$strong(line), tags$br())), add = TRUE)
+    if (stringr::str_detect(stringr::str_remove(line, "[^A-Za-z]+"), "[A-Za-z]+"))
+      shinyjs::html(id = "console", html = as.character(tags$code(class = .class, tags$strong(line), tags$br())), add = TRUE)
     cat(line, sep = "")
   }
 }
 
 futile.logger::flog.appender(info_to_shiny_console())
-futile.logger::flog.threshold(INFO)
+futile.logger::flog.threshold(futile.logger::INFO)
 to_console <- function(x, mc = match.call(), id = "console", session) {
-  .mc <- paste0(rlang::expr_deparse(mc), collapse = " ")
   x <- rlang::enquo(x)
 
   tryCatchLog::tryCatchLog(rlang::eval_tidy(x),
