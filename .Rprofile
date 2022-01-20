@@ -1,5 +1,5 @@
 source("renv/activate.R")
-options(shiny.maxRequestSize=UU::size(50, "mb"),
+options(shiny.maxRequestSize= 52428800,
         keep.source = TRUE,
         tryCatchLog.max.lines.per.call = 30,
         shiny.autoload.r = FALSE,
