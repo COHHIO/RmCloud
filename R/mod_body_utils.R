@@ -29,8 +29,8 @@ to_console <- function(x, mc = match.call(), id = "console", session) {
                            logged.conditions = NA,
                       error = function (e) {
                         .m <- paste0(e$message, collapse = "\n")
-                        .fn <- glue::glue("ERROR_{Sys.time()}.feather")
-                        UU::object_write(tryCatchLog::last.tryCatchLog.result(), .fn)
+                        .fn <- fs::path_sanitize(glue::glue("ERROR_{Sys.time()}.feather"))
+                        arrow::write_feather(tryCatchLog::last.tryCatchLog.result(), .fn, compression = "uncompressed")
                         shiny::showNotification(paste0("Error: ", .m, " logged to ", .fn))
                         shiny::showNotification("Reloading app. You can resume where from where the error occured.", type = "error")
                         session$reload()
