@@ -11,7 +11,6 @@
 mod_body_ui <- function(id){
   ns <- NS(id)
   tagList(
-    shinyjs::useShinyjs(),
     fluidRow(bs4Dash::bs4Card(
       title = "Controls",
       id = "controls",
@@ -31,6 +30,10 @@ mod_body_ui <- function(id){
       shiny::uiOutput(ns("step_options"), width = "100%"),
       fluidRow(
         bs4Dash::appButton(inputId = ns("run"), label = "Run", width = "100%", color = "primary")
+      ),
+      fluidRow(
+        bs4Dash::appButton(inputId = ns("rmdata_update"), label = "Update RmData", width = "100%", color = "primary"),
+        tags$script(paste0("$('#",ns("rmdata_update"),"').hide();"))
       ),
       width = 12
     )),
@@ -55,6 +58,13 @@ mod_body_server <- function(id){
     })
 
 
+
+    observeEvent(input$rmdata_update, {
+      cli::cli_inform("Installing RmData...")
+      unloadNamespace("RmData")
+      remotes::install_github("COHHIO/RmData", upgrade = "never")
+      cli::cli_inform("RmData installed.")
+    }, ignoreInit = TRUE, once = TRUE)
 
 
     step_opts <- eventReactive(input$steps, {
