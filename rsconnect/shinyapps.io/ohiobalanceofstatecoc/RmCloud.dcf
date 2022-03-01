@@ -5,10 +5,10 @@ account: ohiobalanceofstatecoc
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5412410
-bundleId: 5524439
+bundleId: 5626294
 url: https://ohiobalanceofstatecoc.shinyapps.io/RmCloud/
-when: 1643578922.75032
-lastSyncTime: 1643578922.75032
+when: 1646073857.85265
+lastSyncTime: 1646073857.85265
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .Rbuildignore|dev/01_start.R|dev/02_dev.R|dev/03_deploy.R|dev/run_dev.R|data
