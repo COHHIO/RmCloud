@@ -12,3 +12,5 @@ do_sass <- function (x) {
 }
 
 do_sass(crssp_sass_bundle)
+
+UU::mkpath("data", mkdir = TRUE)
