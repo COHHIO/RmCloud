@@ -31,10 +31,7 @@ mod_body_ui <- function(id){
       fluidRow(
         bs4Dash::appButton(inputId = ns("run"), label = "Run", width = "100%", color = "primary")
       ),
-      fluidRow(
-        bs4Dash::appButton(inputId = ns("rmdata_update"), label = "Update RmData", width = "100%", color = "primary"),
-        tags$script(paste0("$('#",ns("rmdata_update"),"').hide();"))
-      ),
+
       width = 12
     )),
     fluidRow(tags$h5(class = "text-center", "Console"), tags$hr()),
@@ -52,26 +49,17 @@ mod_body_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
-    observeEvent(input$export_zip, {
-      if (file.exists(input$export_zip$datapath))
-        out <- clarity.looker::hud_export_extract(input$export_zip$datapath, dirs$export)
-    })
 
-
-
-    observeEvent(input$rmdata_update, {
-      cli::cli_inform("Installing RmData...")
-      unloadNamespace("RmData")
-      remotes::install_github("COHHIO/RmData", upgrade = "never")
-      cli::cli_inform("RmData installed.")
-    }, ignoreInit = TRUE, once = TRUE)
 
 
     step_opts <- eventReactive(input$steps, {
       req(input$steps)
       opt_row <- list()
-      if ("update" %in% input$steps)
-        opt_row$update <- shiny::fileInput(ns("export_zip"), "Zip with Export CSVs", width = "100%", accept = c(".zip", ".7z"))
+      if ("update" %in% input$steps) {
+        opt_row$use_upload <- tagList(shinyWidgets::prettyCheckbox(ns("use_upload"), "Use uploaded CSV?", value = TRUE),
+        shiny::fileInput(ns("export_zip"), "HUD CSV Export Upload", width = "100%", accept = c(".zip", ".7z")))
+      }
+
 
       if ("funs" %in% input$steps)
         opt_row$funs <- shinyWidgets::pickerInput(
@@ -99,9 +87,23 @@ mod_body_server <- function(id){
 
     }, priority = -1)
 
-    observeEvent(input$run, {
+    observeEvent(c(input$run, input$export_zip), {
       req(input$run, input$steps, input$functions)
-      to_console(RmData::daily_update(session = session, steps = input$steps, funs = input$functions, app_env = Rm_env, clarity_api = cl_api, remote = TRUE), session = session)
+      if (input$use_upload && is.null(input$export_zip))
+        to_console(message("Waiting for export zip..."))
+      req(input$export_zip)
+      if (input$use_upload && file.exists(input$export_zip$datapath)) {
+        message("Export zip location: ", input$export_zip$datapath)
+        out <- clarity.looker::hud_export_extract(input$export_zip$datapath, dirs$export)
+        if (out && !max(UU::last_updated(path = dirs$export), na.rm = TRUE) > Sys.Date()) {
+          print(list.files(recursive = TRUE, full.names = TRUE))
+          UU::gbort("No export files detected. Check logs for possible location.")
+        }
+      }
+
+        to_console(RmData::daily_update(session = session, steps = input$steps, funs = input$functions, app_env = Rm_env, clarity_api = cl_api, remote = TRUE), session = session)
+
+
     })
 
   })
